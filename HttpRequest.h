@@ -1,5 +1,4 @@
 #pragma once
-
 #include "HttpStateDefine.h"
 #include <memory>
 

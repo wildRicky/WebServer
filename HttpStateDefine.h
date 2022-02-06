@@ -6,7 +6,7 @@ enum class HTTP_METHOD
     POST,
     PUT,
     DELETE
-}
+};
 
 enum class HTTP_HEAD
 {
@@ -16,21 +16,21 @@ enum class HTTP_HEAD
     HOST,
     CONNECTION,
     UPGRADE
-}
+};
 
 enum class PARSE_STATE //主状态机状态
 {
     PARSE_METHOD,
     PARSE_HEAD,
     PARSE_DATA
-}
+};
 
 enum class LINE_STATE  //从状态机状态
 {
     LINE_FINISH,
     LINE_MORE,
     LINE_BAD
-}
+};
 
 enum class HTTP_CODE
 {
@@ -39,5 +39,5 @@ enum class HTTP_CODE
     BAD_REQUEST,
     FORBIDDEN_REQUEST,
     INTERNAL_ERROR
-}
+};
 

@@ -1,5 +1,4 @@
-#pragma once
-#include <unique_ptr>
+#include <memory>
 #include "HttpRequest.h"
 
 LINE_STATE HttpRequest::_parseLine()
@@ -7,25 +6,25 @@ LINE_STATE HttpRequest::_parseLine()
     char c;
     for(;startIndex<readIndex;++startIndex)
     {
-        c=(*buff)[startIndex];
+        c=buff[startIndex];               //注意不能使用(buff)[startIndex],因为(buff)的结果应该是char*,失去了数组意义，相当于数组作形式参数传入函数中，应当直接使用重载的[]运算符。
         if(c=='\r')
         {
-            if(startIndex+1=readIndex)
+            if(startIndex+1==readIndex)
                 return LINE_STATE::LINE_MORE;
-            else if((*buff)[startIndex+1]=='\n')
+            else if((buff)[startIndex+1]=='\n')
             {
 
-                (*buff)[startIndex++]='\0';
-                (*buff)[startIndex++]='\0';
+                (buff)[startIndex++]='\0';
+                (buff)[startIndex++]='\0';
                 return LINE_STATE::LINE_FINISH;
             }
             return LINE_STATE::LINE_BAD;
         }else if(c=='\n')
         {
-            if(startIndex>1&&(*buff)[startIndex-1]=='\r')
+            if(startIndex>1&&(buff)[startIndex-1]=='\r')
             {
-                (*buff)[startIndex-1]=='\0';
-                (*buff)[startIndex++]=='\0';
+                (buff)[startIndex-1]='\0';
+                (buff)[startIndex++]='\0';
                 return LINE_STATE::LINE_FINISH;
             }
             return LINE_STATE::LINE_BAD;
@@ -38,10 +37,10 @@ HTTP_CODE HttpRequest::parseContent()
 {
    LINE_STATE lineState=LINE_STATE::LINE_FINISH;
    HTTP_CODE retCode=HTTP_CODE::NO_REQUEST;
-   while(lineState=parseLine(buff,startIndex,curIndex))
+   while((lineState=_parseLine())==LINE_STATE::LINE_FINISH)
    {
-       string str=string((*buff)+startLine);
-       startLine=readIndex;
+       std::string str=std::string(buff.get()+startIndex);
+       startIndex=readIndex;
        switch(curParseState)
        {
             case PARSE_STATE::PARSE_METHOD:
@@ -61,7 +60,7 @@ HTTP_CODE HttpRequest::parseContent()
             case PARSE_STATE::PARSE_DATA:
             {
                 retCode=_parseDataLine(str);
-                if(retCode==HTTP_CODE::BAD_REQEST)
+                if(retCode==HTTP_CODE::BAD_REQUEST)
                     return HTTP_CODE::BAD_REQUEST;
                 else if(retCode==HTTP_CODE::GET_REQUEST)
                     return HTTP_CODE::GET_REQUEST;
@@ -71,6 +70,7 @@ HTTP_CODE HttpRequest::parseContent()
                 return HTTP_CODE::INTERNAL_ERROR;
        }
    }
+   return HTTP_CODE::INTERNAL_ERROR;
 }
 
 HTTP_CODE HttpRequest::_parseRequestLine(const std::string &str)
@@ -90,11 +90,11 @@ HTTP_CODE HttpRequest::_parseRequestLine(const std::string &str)
 
 HTTP_CODE HttpRequest::_parseHeadLine(const std::string &str)
 {
-    auto pos=find_first_of(':');
+    auto pos=str.find_first_of(':');
     if(pos==std::string::npos)
         return  HTTP_CODE::BAD_REQUEST;
-    string name=str.substr(0,pos);
-    string value=str.substr(pos+1,str.size()-pos-1);
+    std::string name=str.substr(0,pos);
+    std::string value=str.substr(pos+1,str.size()-pos-1);
     return HTTP_CODE::NO_REQUEST;
 }
 
