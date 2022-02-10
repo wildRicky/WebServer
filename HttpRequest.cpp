@@ -6,7 +6,7 @@ LINE_STATE HttpRequest::_parseLine()
     char c;
     for(;startIndex<readIndex;++startIndex)
     {
-        c=buff[startIndex];               //注意不能使用(buff)[startIndex],因为(buff)的结果应该是char*,失去了数组意义，相当于数组作形式参数传入函数中，应当直接使用重载的[]运算符。
+        c=buff[startIndex];               //注意不能使用*(buff)[startIndex],因为*(buff)的结果应该是char*,失去了数组意义，相当于数组作形式参数传入函数中，应当直接使用重载的[]运算符。
         if(c=='\r')
         {
             if(startIndex+1==readIndex)
@@ -101,4 +101,26 @@ HTTP_CODE HttpRequest::_parseHeadLine(const std::string &str)
 HTTP_CODE HttpRequest::_parseDataLine(const std::string &str)
 {
     return HTTP_CODE::NO_REQUEST;
+}
+
+bool HttpRequest::read(int sockfd)
+{
+    if(readIndex>=READ_BUFFER_SIZE)
+    {
+        return false;
+    }
+    int byteRead=0;
+    while(true)
+    {
+        byteRead=recv(sockfd,buff.get()+startIndex,READ_BUFFER_SIZE-startIndex,0);
+        if(byteRead==-1)
+        {
+            if(errno==EAGAIN||errno==EWOULDBLCOK)
+                break;
+            return false;
+        }else if(byteRead==0)
+            return false;
+        startIndex+=byteRead;
+    }
+    return true;
 }

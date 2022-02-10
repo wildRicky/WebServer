@@ -9,20 +9,20 @@
 #include "MutexLock.h"
 
 const int MAX_THREAD_NUM=1024;
-const int MAX_QUEUE_NUM=65535;
+const int MAX_QUEUE_NUM=65535;      //最大队列长度，不等于最大连接数，proactor模式一个链接可能有多个请求，因为每个线程只处理数据，不负责IO
 
-struct ThreadTask
+/*struct ThreadTask
 {
     std::function<void (std::shared_ptr<void>)> process;
     std::shared_ptr<void> data;
 };
-
+*/
 class ThreadPool
 {
 public:
     static ThreadPool& getInstance(int threadNum,int maxRequestNum);
     static void worker();
-    bool add(std::function<void (std::shared_ptr<void>)> fun,std::shared_ptr<void> arg);
+    bool add(std::function<void ()> fun);
 private:
     ThreadPool(int threadNum,int maxRequestNum);
     ~ThreadPool();
@@ -31,7 +31,7 @@ private:
     MutexLock poolMutex;
     Sem poolSem;
     std::vector<pthread_t> mThreads;
-    std::list<ThreadTask> requestQueue;
+    std::list<std::function<void()>> requestQueue;
     int mThreadNum;
     int mMaxRequestNum;
     bool mStop;

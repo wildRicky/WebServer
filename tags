@@ -1,0 +1,27 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+BAD_REQUEST	HttpStateDefine.h	/^    BAD_REQUEST,$/;"	e	enum:HTTP_CODE
+DELETE	HttpStateDefine.h	/^    DELETE$/;"	e	enum:HTTP_METHOD
+FORBIDDEN_REQUEST	HttpStateDefine.h	/^    FORBIDDEN_REQUEST,$/;"	e	enum:HTTP_CODE
+GET	HttpStateDefine.h	/^    GET,$/;"	e	enum:HTTP_METHOD
+GET_REQUEST	HttpStateDefine.h	/^    GET_REQUEST,$/;"	e	enum:HTTP_CODE
+HEAD	HttpStateDefine.h	/^    HEAD,$/;"	e	enum:HTTP_METHOD
+HTTP_CODE	HttpStateDefine.h	/^enum class HTTP_CODE$/;"	g
+HTTP_METHOD	HttpStateDefine.h	/^enum class HTTP_METHOD$/;"	g
+HttpRequest	HttpRequest.h	/^    HttpRequest():curParseState(PARSE_STATE::PARSE_METHOD){};$/;"	f	class:HttpRequest
+HttpRequest	HttpRequest.h	/^class HttpRequest$/;"	c
+INTERNAL_ERROR	HttpStateDefine.h	/^    INTERNAL_ERROR$/;"	e	enum:HTTP_CODE
+NO_REQUEST	HttpStateDefine.h	/^    NO_REQUEST,$/;"	e	enum:HTTP_CODE
+PARSE_DATA	HttpStateDefine.h	/^    PARSE_DATA$/;"	e	enum:PARSE_STATE
+PARSE_HEAD	HttpStateDefine.h	/^    PARSE_HEAD,$/;"	e	enum:PARSE_STATE
+PARSE_METHOD	HttpStateDefine.h	/^    PARSE_METHOD,$/;"	e	enum:PARSE_STATE
+PARSE_STATE	HttpStateDefine.h	/^enum class PARSE_STATE \/\/主状态机状态$/;"	g
+POST	HttpStateDefine.h	/^    POST,$/;"	e	enum:HTTP_METHOD
+PUT	HttpStateDefine.h	/^    PUT,$/;"	e	enum:HTTP_METHOD
+curParseState	HttpRequest.h	/^    PARSE_STATE curParseState;$/;"	m	class:HttpRequest	typeref:typename:PARSE_STATE
+parseContent	HttpRequest.cpp	/^HTTP_CODE HttpRequest::parseContent(const unique_ptr<char[]> &buff,int& startIndex,int& curIndex/;"	f	class:HttpRequest	typeref:typename:HTTP_CODE

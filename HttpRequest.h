@@ -2,9 +2,11 @@
 #include "HttpStateDefine.h"
 #include <memory>
 
+static cosnt int READ_BUFFER_SIZE;
 class HttpRequest
 {
 private:
+//TODO 构造函数HttpRequest();
     LINE_STATE _parseLine();
     HTTP_CODE _parseRequestLine(const std::string &);
     HTTP_CODE _parseHeadLine(const std::string &);
@@ -16,5 +18,7 @@ private:
 public:
     HTTP_CODE parseContent();
     HttpRequest():curParseState(PARSE_STATE::PARSE_METHOD){};
+
+    bool read(int);
 };
 

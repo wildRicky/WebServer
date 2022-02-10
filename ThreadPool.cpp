@@ -34,18 +34,17 @@ mMaxRequestNum(maxRequestNum),mStop(false)
 ThreadPool::~ThreadPool()
 {
 };
-bool ThreadPool::add(std::function<void (std::shared_ptr<void>)> fun,std::shared_ptr<void> arg)
+bool ThreadPool::add(std::function<void ()> fun)
 {
     if((int)requestQueue.size()==mMaxRequestNum)
     {
         std::cout<<"error!Request queue full"<<std::endl;
         return false;
     }
-    ThreadTask task;
-    task.process=fun;
-    task.data=arg;
+    //ThreadTask task;
+    //task.process=fun;
     poolMutex.lock();
-    requestQueue.push_back(task);
+    requestQueue.push_back(fun);
     poolMutex.unlock();
     poolSem.post();
     return true;
@@ -62,10 +61,10 @@ void ThreadPool::run()
             poolMutex.unlock();
             continue;
         }
-        ThreadTask task=requestQueue.front();
+        std::function<void()> process=requestQueue.front();
         requestQueue.pop_front();
         poolMutex.unlock();
-        task.process(task.data);
+        process();
     }
     return;
 };
