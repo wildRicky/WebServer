@@ -1,13 +1,13 @@
 #include "ThreadPool.h"
 #include <iostream>
 
-static ThreadPool& ThreadPool::getInstance(int threadNum,int maxRequestNum)
+ThreadPool& ThreadPool::getInstance(int threadNum,int maxRequestNum)
 {
     static ThreadPool singleton(threadNum,maxRequestNum);
     return singleton;
 }
 
-static void ThreadPool::worker()
+void ThreadPool::worker()
 {
     getInstance(0,0).run();
     return;
@@ -33,7 +33,9 @@ mMaxRequestNum(maxRequestNum),mStop(false)
 
 ThreadPool::~ThreadPool()
 {
+    
 };
+
 bool ThreadPool::add(std::function<void ()> fun)
 {
     if((int)requestQueue.size()==mMaxRequestNum)

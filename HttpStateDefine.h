@@ -1,4 +1,9 @@
 #pragma once
+enum class HTTP_VERSION {
+    HTTP_10,
+    HTTP_11, 
+    VERSION_NOT_SUPPORT
+};
 enum class HTTP_METHOD
 {
     GET,

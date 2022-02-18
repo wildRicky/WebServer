@@ -5,17 +5,43 @@
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	0.0.0	//
+ACCEPT_DATETIME	HttpStateDefine.h	/^    ACCEPT_DATETIME,$/;"	e	enum:HTTP_HEAD
+ACCEPT_ENCODING	HttpStateDefine.h	/^    ACCEPT_ENCODING,$/;"	e	enum:HTTP_HEAD
 BAD_REQUEST	HttpStateDefine.h	/^    BAD_REQUEST,$/;"	e	enum:HTTP_CODE
+CONNECTION	HttpStateDefine.h	/^    CONNECTION,$/;"	e	enum:HTTP_HEAD
+ClientSocket	Socket.h	/^    ClientSocket(sockaddr_in addr,socklen_t len,int fd):mAddr(addr),mAddrLen(len),sockFd(fd){};$/;"	f	class:ClientSocket
+ClientSocket	Socket.h	/^class ClientSocket$/;"	c
 DELETE	HttpStateDefine.h	/^    DELETE$/;"	e	enum:HTTP_METHOD
+Epoll	Epoll.cpp	/^Epoll::Epoll(int maxFdNum):userData(maxFdNum)$/;"	f	class:Epoll
+Epoll	Epoll.h	/^class Epoll$/;"	c
 FORBIDDEN_REQUEST	HttpStateDefine.h	/^    FORBIDDEN_REQUEST,$/;"	e	enum:HTTP_CODE
 GET	HttpStateDefine.h	/^    GET,$/;"	e	enum:HTTP_METHOD
 GET_REQUEST	HttpStateDefine.h	/^    GET_REQUEST,$/;"	e	enum:HTTP_CODE
 HEAD	HttpStateDefine.h	/^    HEAD,$/;"	e	enum:HTTP_METHOD
+HOST	HttpStateDefine.h	/^    HOST,$/;"	e	enum:HTTP_HEAD
+HTTP_10	HttpStateDefine.h	/^    HTTP_10,$/;"	e	enum:HTTP_VERSION
+HTTP_11	HttpStateDefine.h	/^    HTTP_11, $/;"	e	enum:HTTP_VERSION
 HTTP_CODE	HttpStateDefine.h	/^enum class HTTP_CODE$/;"	g
+HTTP_HEAD	HttpStateDefine.h	/^enum class HTTP_HEAD$/;"	g
 HTTP_METHOD	HttpStateDefine.h	/^enum class HTTP_METHOD$/;"	g
-HttpRequest	HttpRequest.h	/^    HttpRequest():curParseState(PARSE_STATE::PARSE_METHOD){};$/;"	f	class:HttpRequest
+HTTP_VERSION	HttpStateDefine.h	/^enum class HTTP_VERSION {$/;"	g
+HttpData	HttpData.h	/^    HttpData():mRequest(std::make_shared<HttpRequest>()){};$/;"	f	class:HttpData
+HttpData	HttpData.h	/^class HttpData$/;"	c
+HttpRequest	HttpRequest.cpp	/^HttpRequest::HttpRequest():$/;"	f	class:HttpRequest
 HttpRequest	HttpRequest.h	/^class HttpRequest$/;"	c
+HttpResponse	HttpResponse.h	/^class HttpResponse$/;"	c
 INTERNAL_ERROR	HttpStateDefine.h	/^    INTERNAL_ERROR$/;"	e	enum:HTTP_CODE
+LINE_BAD	HttpStateDefine.h	/^    LINE_BAD$/;"	e	enum:LINE_STATE
+LINE_FINISH	HttpStateDefine.h	/^    LINE_FINISH,$/;"	e	enum:LINE_STATE
+LINE_MORE	HttpStateDefine.h	/^    LINE_MORE,$/;"	e	enum:LINE_STATE
+LINE_STATE	HttpStateDefine.h	/^enum class LINE_STATE  \/\/从状态机状态$/;"	g
+MAX_EVENT_NUM	Epoll.cpp	/^const int Epoll::MAX_EVENT_NUM=10000;$/;"	m	class:Epoll	typeref:typename:const int
+MAX_EVENT_NUM	Epoll.h	/^    static const int MAX_EVENT_NUM; \/\/系统的最大event$/;"	m	class:Epoll	typeref:typename:const int
+MAX_QUEUE_NUM	ThreadPool.h	/^const int MAX_QUEUE_NUM=65535;      \/\/最大队列长度，不等于最大连接数，proactor/;"	v	typeref:typename:const int
+MAX_THREAD_NUM	ThreadPool.h	/^const int MAX_THREAD_NUM=1024;$/;"	v	typeref:typename:const int
+MimeMap	HttpResponse.cpp	/^std::unordered_map<std::string, std::string> MimeMap = {$/;"	v	typeref:typename:std::unordered_map<std::string,std::string>
+MutexLock	MutexLock.h	/^    MutexLock(){$/;"	f	class:MutexLock
+MutexLock	MutexLock.h	/^class MutexLock$/;"	c
 NO_REQUEST	HttpStateDefine.h	/^    NO_REQUEST,$/;"	e	enum:HTTP_CODE
 PARSE_DATA	HttpStateDefine.h	/^    PARSE_DATA$/;"	e	enum:PARSE_STATE
 PARSE_HEAD	HttpStateDefine.h	/^    PARSE_HEAD,$/;"	e	enum:PARSE_STATE
@@ -23,5 +49,99 @@ PARSE_METHOD	HttpStateDefine.h	/^    PARSE_METHOD,$/;"	e	enum:PARSE_STATE
 PARSE_STATE	HttpStateDefine.h	/^enum class PARSE_STATE \/\/主状态机状态$/;"	g
 POST	HttpStateDefine.h	/^    POST,$/;"	e	enum:HTTP_METHOD
 PUT	HttpStateDefine.h	/^    PUT,$/;"	e	enum:HTTP_METHOD
+READ_BUFFER_SIZE	HttpRequest.h	/^    static const int READ_BUFFER_SIZE;$/;"	m	class:HttpRequest	typeref:typename:const int
+Sem	MutexLock.h	/^    Sem()$/;"	f	class:Sem
+Sem	MutexLock.h	/^class Sem$/;"	c
+ServerSocket	Socket.cpp	/^ServerSocket::ServerSocket(int port=8080,std::string address=std::string())$/;"	f	class:ServerSocket
+ServerSocket	Socket.h	/^class ServerSocket$/;"	c
+ThreadPool	ThreadPool.cpp	/^ThreadPool::ThreadPool(int threadNum,int maxRequestNum):mThreadNum(threadNum),$/;"	f	class:ThreadPool
+ThreadPool	ThreadPool.h	/^class ThreadPool$/;"	c
+TimeNode	Timer.cpp	/^TimeNode::TimeNode(std::shared_ptr<HttpData> usrDataPtr,size_t delay):isDeleted(false),mUserData/;"	f	class:TimeNode
+TimeNode	Timer.h	/^struct TimeNode$/;"	s
+Timer	Timer.h	/^class Timer$/;"	c
+UPGRADE	HttpStateDefine.h	/^    UPGRADE$/;"	e	enum:HTTP_HEAD
+USER_AGENT	HttpStateDefine.h	/^    USER_AGENT,$/;"	e	enum:HTTP_HEAD
+VERSION_NOT_SUPPORT	HttpStateDefine.h	/^    VERSION_NOT_SUPPORT$/;"	e	enum:HTTP_VERSION
+_parseDataLine	HttpRequest.cpp	/^HTTP_CODE HttpRequest::_parseDataLine(const std::string &str)$/;"	f	class:HttpRequest	typeref:typename:HTTP_CODE
+_parseHeadLine	HttpRequest.cpp	/^HTTP_CODE HttpRequest::_parseHeadLine(const std::string &str)$/;"	f	class:HttpRequest	typeref:typename:HTTP_CODE
+_parseLine	HttpRequest.cpp	/^LINE_STATE HttpRequest::_parseLine()$/;"	f	class:HttpRequest	typeref:typename:LINE_STATE
+_parseRequestLine	HttpRequest.cpp	/^HTTP_CODE HttpRequest::_parseRequestLine(const std::string &str)$/;"	f	class:HttpRequest	typeref:typename:HTTP_CODE
+accept	Socket.cpp	/^int ServerSocket::accept(sockaddr_in &clientAddr)$/;"	f	class:ServerSocket	typeref:typename:int
+add	ThreadPool.cpp	/^bool ThreadPool::add(std::function<void ()> fun)$/;"	f	class:ThreadPool	typeref:typename:bool
+addFd	Epoll.cpp	/^void Epoll::addFd(int fd,bool oneshot)$/;"	f	class:Epoll	typeref:typename:void
+addHeader	HttpResponse.h	/^    void addHeader(std::string key,std::string value)$/;"	f	class:HttpResponse	typeref:typename:void
+addTimer	Timer.cpp	/^shared_TimeNode Timer::addTimer(std::shared_ptr<HttpData> usrDataPtr,size_t delay)$/;"	f	class:Timer	typeref:typename:shared_TimeNode
+bind	Socket.cpp	/^void ServerSocket::bind()$/;"	f	class:ServerSocket	typeref:typename:void
+buff	HttpRequest.h	/^    std::unique_ptr<char[]> buff;$/;"	m	class:HttpRequest	typeref:typename:std::unique_ptr<char[]>
+close	Timer.cpp	/^void TimeNode::close()$/;"	f	class:TimeNode	typeref:typename:void
+closeTime	HttpData.cpp	/^void HttpData::closeTime()$/;"	f	class:HttpData	typeref:typename:void
 curParseState	HttpRequest.h	/^    PARSE_STATE curParseState;$/;"	m	class:HttpRequest	typeref:typename:PARSE_STATE
-parseContent	HttpRequest.cpp	/^HTTP_CODE HttpRequest::parseContent(const unique_ptr<char[]> &buff,int& startIndex,int& curIndex/;"	f	class:HttpRequest	typeref:typename:HTTP_CODE
+currTime	Timer.cpp	/^static size_t TimeNode::currTime()$/;"	f	class:TimeNode	typeref:typename:size_t	file:
+delFd	Epoll.cpp	/^void Epoll::delFd(int fd)$/;"	f	class:Epoll	typeref:typename:void
+expiredTime	Timer.h	/^    size_t expiredTime;$/;"	m	struct:TimeNode	typeref:typename:size_t
+getInstance	ThreadPool.cpp	/^ThreadPool& ThreadPool::getInstance(int threadNum,int maxRequestNum)$/;"	f	class:ThreadPool	typeref:typename:ThreadPool &
+headerMap	HttpResponse.h	/^    std::unordered_map<std::string,std::string> headerMap;$/;"	m	class:HttpResponse	typeref:typename:std::unordered_map<std::string,std::string>
+init	HttpData.cpp	/^void HttpData::init(sockaddr_in addr,socklen_t len,int connFd)$/;"	f	class:HttpData	typeref:typename:void
+init	HttpRequest.cpp	/^void HttpRequest::init()$/;"	f	class:HttpRequest	typeref:typename:void
+isDeleted	Timer.h	/^    bool isDeleted;$/;"	m	struct:TimeNode	typeref:typename:bool
+listen	Socket.cpp	/^void ServerSocket::listen(int backlog)$/;"	f	class:ServerSocket	typeref:typename:void
+lock	MutexLock.h	/^    void lock(){$/;"	f	class:MutexLock	typeref:typename:void
+mAddr	Socket.h	/^    sockaddr_in mAddr;$/;"	m	class:ClientSocket	typeref:typename:sockaddr_in
+mAddr	Socket.h	/^    sockaddr_in mAddr;$/;"	m	class:ServerSocket	typeref:typename:sockaddr_in
+mAddrLen	Socket.h	/^    socklen_t mAddrLen;$/;"	m	class:ClientSocket	typeref:typename:socklen_t
+mBody	HttpResponse.h	/^    char* mBody;$/;"	m	class:HttpResponse	typeref:typename:char *
+mClientSocket	HttpData.h	/^    std::shared_ptr<ClientSocket> mClientSocket;$/;"	m	class:HttpData	typeref:typename:std::shared_ptr<ClientSocket>
+mContent	HttpRequest.h	/^    std::string mContent;$/;"	m	class:HttpRequest	typeref:typename:std::string
+mContentLength	HttpResponse.h	/^    int mContentLength;$/;"	m	class:HttpResponse	typeref:typename:int
+mEpollEvents	Epoll.h	/^    std::unique_ptr<epoll_event[]> mEpollEvents;$/;"	m	class:Epoll	typeref:typename:std::unique_ptr<epoll_event[]>
+mEpollFd	Epoll.h	/^    int mEpollFd;$/;"	m	class:Epoll	typeref:typename:int
+mHttpVersion	HttpResponse.h	/^    std::string mHttpVersion;$/;"	m	class:HttpResponse	typeref:typename:std::string
+mIp	Socket.h	/^    std::string mIp;$/;"	m	class:ServerSocket	typeref:typename:std::string
+mKeepAlive	HttpResponse.h	/^    bool mKeepAlive;$/;"	m	class:HttpResponse	typeref:typename:bool
+mListenFd	Socket.h	/^    int mListenFd;$/;"	m	class:ServerSocket	typeref:typename:int
+mMaxRequestNum	ThreadPool.h	/^    int mMaxRequestNum;$/;"	m	class:ThreadPool	typeref:typename:int
+mMethod	HttpRequest.h	/^    HTTP_METHOD mMethod; $/;"	m	class:HttpRequest	typeref:typename:HTTP_METHOD
+mMimeType	HttpResponse.h	/^    std::string mMimeType;$/;"	m	class:HttpResponse	typeref:typename:std::string
+mMutex	MutexLock.h	/^    pthread_mutex_t mMutex;$/;"	m	class:MutexLock	typeref:typename:pthread_mutex_t
+mRequest	HttpData.h	/^    std::shared_ptr<HttpRequest> mRequest;$/;"	m	class:HttpData	typeref:typename:std::shared_ptr<HttpRequest>
+mSem	MutexLock.h	/^    sem_t mSem;$/;"	m	class:Sem	typeref:typename:sem_t
+mStatusCode	HttpResponse.h	/^    int mStatusCode;$/;"	m	class:HttpResponse	typeref:typename:int
+mStop	ThreadPool.h	/^    bool mStop;$/;"	m	class:ThreadPool	typeref:typename:bool
+mThreadNum	ThreadPool.h	/^    int mThreadNum;$/;"	m	class:ThreadPool	typeref:typename:int
+mThreads	ThreadPool.h	/^    std::vector<pthread_t> mThreads;$/;"	m	class:ThreadPool	typeref:typename:std::vector<pthread_t>
+mTimer	Epoll.h	/^    static Timer mTimer;$/;"	m	class:Epoll	typeref:typename:Timer
+mTimer	HttpData.h	/^    std::weak_ptr<TimeNode> mTimer;$/;"	m	class:HttpData	typeref:typename:std::weak_ptr<TimeNode>
+mUrl	HttpRequest.h	/^    std::string mUrl;$/;"	m	class:HttpRequest	typeref:typename:std::string
+mUserData	Timer.h	/^    std::shared_ptr<HttpData> mUserData;$/;"	m	struct:TimeNode	typeref:typename:std::shared_ptr<HttpData>
+mVersion	HttpRequest.h	/^    HTTP_VERSION mVersion;$/;"	m	class:HttpRequest	typeref:typename:HTTP_VERSION
+parseContent	HttpRequest.cpp	/^HTTP_CODE HttpRequest::parseContent()$/;"	f	class:HttpRequest	typeref:typename:HTTP_CODE
+poll	Epoll.cpp	/^void Epoll::poll(int listenFd,int eventNum,int delay)$/;"	f	class:Epoll	typeref:typename:void
+poolMutex	ThreadPool.h	/^    MutexLock poolMutex;$/;"	m	class:ThreadPool	typeref:typename:MutexLock
+poolSem	ThreadPool.h	/^    Sem poolSem;$/;"	m	class:ThreadPool	typeref:typename:Sem
+post	MutexLock.h	/^    void post()$/;"	f	class:Sem	typeref:typename:void
+read	HttpRequest.cpp	/^bool HttpRequest::read(int sockfd)$/;"	f	class:HttpRequest	typeref:typename:bool
+readIndex	HttpRequest.h	/^    int readIndex;$/;"	m	class:HttpRequest	typeref:typename:int
+requestQueue	ThreadPool.h	/^    std::list<std::function<void()>> requestQueue;$/;"	m	class:ThreadPool	typeref:typename:std::list<std::function<void ()>>
+run	ThreadPool.cpp	/^void ThreadPool::run()$/;"	f	class:ThreadPool	typeref:typename:void
+setBody	HttpResponse.h	/^    void setBody(char *b)$/;"	f	class:HttpResponse	typeref:typename:void
+setContentLength	HttpResponse.h	/^    void setContentLength(int l)$/;"	f	class:HttpResponse	typeref:typename:void
+setKeepAlive	HttpResponse.h	/^    void setKeepAlive(bool k)$/;"	f	class:HttpResponse	typeref:typename:void
+setMimeType	HttpResponse.cpp	/^void HttpResponse::setMimeType(std::string str)$/;"	f	class:HttpResponse	typeref:typename:void
+setNonBlocking	Epoll.cpp	/^int setNonBlocking(int fd)$/;"	f	typeref:typename:int
+setResponse	HttpResponse.cpp	/^void HttpResponse::setResponse(char* buff)$/;"	f	class:HttpResponse	typeref:typename:void
+setStatusCode	HttpResponse.h	/^    void setStatusCode(int c)$/;"	f	class:HttpResponse	typeref:typename:void
+setTimer	HttpData.cpp	/^void HttpData::setTimer(std::shared_ptr<TimeNode> newTimer)$/;"	f	class:HttpData	typeref:typename:void
+setVersion	HttpResponse.h	/^    void setVersion(std::string v)$/;"	f	class:HttpResponse	typeref:typename:void
+shared_TimeNode	Timer.h	/^    typedef std::shared_ptr<TimeNode> shared_TimeNode;$/;"	t	class:Timer	typeref:typename:std::shared_ptr<TimeNode>
+sockFd	Socket.h	/^    int sockFd;$/;"	m	class:ClientSocket	typeref:typename:int
+startIndex	HttpRequest.h	/^    int startIndex;$/;"	m	class:HttpRequest	typeref:typename:int
+tick	Timer.cpp	/^void Timer::tick()$/;"	f	class:Timer	typeref:typename:void
+timeHeap	Timer.h	/^    std::priority_queue<shared_TimeNode,vector<shared_TimeNode>,TimeCompare> timeHeap;$/;"	m	class:Timer	typeref:typename:std::priority_queue<shared_TimeNode,vector<shared_TimeNode>,TimeCompare>
+topTime	Timer.cpp	/^size_t Timer::topTime()$/;"	f	class:Timer	typeref:typename:size_t
+unlock	MutexLock.h	/^    void unlock()$/;"	f	class:MutexLock	typeref:typename:void
+userData	Epoll.h	/^    vector<std::shared_ptr<HttpData>> userData;$/;"	m	class:Epoll	typeref:typename:vector<std::shared_ptr<HttpData>>
+wait	MutexLock.h	/^    void wait()$/;"	f	class:Sem	typeref:typename:void
+worker	ThreadPool.cpp	/^void ThreadPool::worker()$/;"	f	class:ThreadPool	typeref:typename:void
+~MutexLock	MutexLock.h	/^    ~MutexLock(){$/;"	f	class:MutexLock
+~Sem	MutexLock.h	/^    ~Sem()$/;"	f	class:Sem
+~ThreadPool	ThreadPool.cpp	/^ThreadPool::~ThreadPool()$/;"	f	class:ThreadPool

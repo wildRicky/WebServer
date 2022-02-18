@@ -52,9 +52,10 @@ void ServerSocket::listen(int backlog)
     return;
 }
 
-int ServerSocket::accept(ClientSocket &clientSock)
+int ServerSocket::accept(sockaddr_in &clientAddr)
 {
-    int fd=::accept(mListenFd,(sockaddr*)&clientSock.mAddr,&clientSock.mAddrLen);
+    int addrLen=sizeof(clientAddr);
+    int fd=::accept(mListenFd,(sockaddr*)&clientAddr,&addrLen);
     if(fd<0)
     {
         if(errno==EWOULDBLOCK||errno==EAGAIN)
@@ -62,6 +63,5 @@ int ServerSocket::accept(ClientSocket &clientSock)
         perror("accept failed");
         return fd;
     }
-    clientSock.sockFd=fd;
     return fd;
 }

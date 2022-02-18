@@ -12,8 +12,9 @@ struct TimeNode
     ~TimeNode();
     bool isDeleted;
     size_t expiredTime;
-    std::shared_ptr<HttpData> userData;
+    std::shared_ptr<HttpData> mUserData;
     static size_t currTime();           //ms
+    void close();
 }
 
 struct TimeCompare
@@ -27,8 +28,8 @@ class Timer
 {
 public:
     typedef std::shared_ptr<TimeNode> shared_TimeNode;
-    void addTimer(std::shared_ptr<HttpData>,size_t delay);
-    void delTimer(shared_TimeNode);
+    shared_TimeNode addTimer(shared_TimeNode , size_t);
+    //void delTimer(shared_TimeNode);
     void tick();
 private:
     //priority_queue选择用vector实现，连续内存，所以元素使用固定大小的指针

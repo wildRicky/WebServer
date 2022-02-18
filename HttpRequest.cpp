@@ -1,5 +1,17 @@
 #include <memory>
 #include "HttpRequest.h"
+#include <sys/socket.h>
+
+
+HttpRequest::HttpRequest():
+buff(std::unique_ptr<char[]>(new char[READ_BUFFER_SIZE])){}
+
+void HttpRequest::init()
+{
+    startIndex=0;
+    readIndex=0;
+    curParseState=PARSE_STATE::PARSE_METHOD;
+}
 
 LINE_STATE HttpRequest::_parseLine()
 {
@@ -79,11 +91,21 @@ HTTP_CODE HttpRequest::_parseRequestLine(const std::string &str)
     if(urlPos==std::string::npos)
         return HTTP_CODE::BAD_REQUEST;
     std::string method=str.substr(0,urlPos);
+    if(method=="GET")
+        mMethod=HTTP_METHOD::GET;
+    else if(method=="HEAD")
+        mMethod=HTTP_METHOD::HEAD;
     auto levelPos=str.find_first_of(" \t",urlPos+1);
     if(levelPos==std::string::npos)
         return HTTP_CODE::BAD_REQUEST;
-    std::string url=str.substr(urlPos+1,levelPos-urlPos);
+    mUrl=str.substr(urlPos+1,levelPos-urlPos);
     std::string level=str.substr(levelPos+1,str.size()-levelPos-1);
+    if(level=="HTTP/1.0")
+        mVersion=HTTP_VERSION::HTTP_10;
+    else if(level=="HTTP/1.1")
+        mVersion=HTTP_VERSION::HTTP_11;
+    else
+        return HTTP_CODE::BAD_REQUEST;
     curParseState=PARSE_STATE::PARSE_HEAD;
     return HTTP_CODE::NO_REQUEST;
 }
@@ -112,10 +134,10 @@ bool HttpRequest::read(int sockfd)
     int byteRead=0;
     while(true)
     {
-        byteRead=recv(sockfd,buff.get()+startIndex,READ_BUFFER_SIZE-startIndex,0);
+        byteRead=::recv(sockfd,buff.get()+startIndex,READ_BUFFER_SIZE-startIndex,0);
         if(byteRead==-1)
         {
-            if(errno==EAGAIN||errno==EWOULDBLCOK)
+            if(errno==EAGAIN||errno==EWOULDBLOCK)
                 break;
             return false;
         }else if(byteRead==0)

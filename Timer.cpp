@@ -9,20 +9,23 @@ static size_t TimeNode::currTime()
     return cur.tv_sec*1000+cur.tv_usec/1000;
 };
 
-TimeNode::TimeNode(std::shared_ptr<HttpData> data,size_t delay):isDeleted(false),userData(data)
+TimeNode::TimeNode(std::shared_ptr<HttpData> usrDataPtr,size_t delay):isDeleted(false),mUserData(usrDataPtr)
 {
     expiredTime=delay*1000+currTime();
 };
 
-void Timer::addTimer(std::shared_ptr<HttpData> data,size_t delay)
+shared_TimeNode Timer::addTimer(std::shared_ptr<HttpData> usrDataPtr,size_t delay)
 {
-    timeHeap.push(shared_TimeNode(TimeNode(data,delay));
-    return;
+    shared_TimeNode tmp=std::make_shared<TimeNode>(usrDataPtr,delay);
+    timeHeap.push(tmp);
+    return tmp;
 }
 
-void Timer::delTimer(shared_TimeNode node)
+void TimeNode::close()
 {
-    node->isDeleted=true;
+    isDeleted=true;
+    //这里HttpData只有timer引用，所以reset会使HttpData自动析构
+    mUserData->reset();
     return;
 }
 size_t Timer::topTime()

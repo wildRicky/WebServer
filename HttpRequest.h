@@ -2,23 +2,30 @@
 #include "HttpStateDefine.h"
 #include <memory>
 
-static cosnt int READ_BUFFER_SIZE;
 class HttpRequest
 {
 private:
-//TODO 构造函数HttpRequest();
+
     LINE_STATE _parseLine();
     HTTP_CODE _parseRequestLine(const std::string &);
     HTTP_CODE _parseHeadLine(const std::string &);
     HTTP_CODE _parseDataLine(const std::string &);
+    bool checkContentExsit();
     std::unique_ptr<char[]> buff;
     int startIndex;
     int readIndex;
     PARSE_STATE curParseState;
-public:
-    HTTP_CODE parseContent();
-    HttpRequest():curParseState(PARSE_STATE::PARSE_METHOD){};
 
+    std::string mUrl;
+    HTTP_METHOD mMethod; 
+    HTTP_VERSION mVersion;
+    std::string mContent;
+
+public:
+    static const int READ_BUFFER_SIZE;
+    HTTP_CODE parseContent();
+    HttpRequest();
+    void init();
     bool read(int);
 };
 

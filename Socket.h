@@ -13,7 +13,11 @@ public:
     void bind();
     void listen(int);
     void close();
-    int accept(ClientSocket &);
+    int accept(sockaddr_in &);
+    int getListenFd()
+    {
+        return mListenFd;
+    }
 private:
     sockaddr_in mAddr;
     int mListenFd;
@@ -23,6 +27,7 @@ private:
 class ClientSocket
 {
 public:
+    ClientSocket(sockaddr_in addr,socklen_t len,int fd):mAddr(addr),mAddrLen(len),sockFd(fd){};
     sockaddr_in mAddr;
     socklen_t mAddrLen;
     int sockFd;
