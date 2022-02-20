@@ -1,3 +1,0 @@
-/home/ubantu/WebServer/CMakeFiles/rebuild_cache.dir
-/home/ubantu/WebServer/CMakeFiles/edit_cache.dir
-/home/ubantu/WebServer/CMakeFiles/webserver.dir
