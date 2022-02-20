@@ -1,12 +1,20 @@
 #include "HttpData.h"
 #include <memory>
 #include "Timer.h"
-#include <windows.h>
+#include <unistd.h>
+#include <HttpRequest.h>
+#include <HttpResponse.h>
+#include <Socket.h>
+#include <sys/socket.h>
+#include "Epoll.h"
+#include <iostream>
+
+int HttpData::epollFd=-1;
 void HttpData::closeTime()
 {
     if(!mTimer.expired())
     {
-        mTimer->close();
+        mTimer.lock()->close();
         
     }
     return;
@@ -22,24 +30,27 @@ void HttpData::init(sockaddr_in addr,socklen_t len,int connFd)
 {
     mClientSocket=std::make_shared<ClientSocket>(addr,len,connFd);
     //mRequest是随线程池提前创建好的，需要初始化
-    mRequest.init();
+    mRequest->init();
     return;
 }
 
 bool HttpData::write()
-{
+{   
+    
+    std::cout<<"begin write!"<<std::endl;
     std::string response= mResponse->setResponse();
+    std::cout<<"Response : "<<response<<std::endl;
     int size=response.size();
     if(size==0)
     {
-        modFd(HttpData::epollFd,mClientSocket->sockfd,EPOLLIN);
+        Epoll::modFd(HttpData::epollFd,mClientSocket->sockFd,EPOLLIN);
         return true;
     }
-    char *buff=response.c_str();
-    int writeIndex=0,sockFd=mClientSocket->sockfd;
+    const char *buff=response.c_str();
+    int writeIndex=0,sockFd=mClientSocket->sockFd;
     while(1)
     {
-        temp=writev(sockFd,buff,size);
+        int temp=::write(sockFd,buff,size);
         if(temp<=-1)
         {
             if(errno==EAGAIN)
@@ -57,7 +68,7 @@ bool HttpData::write()
         size-=temp;
         if(size==0)
         {
-            modfd(HttpData::mEpollFd,sockFd,EPOLLIN);
+            Epoll::modFd(HttpData::epollFd,sockFd,EPOLLIN);
             return true;
         }
     }

@@ -3,17 +3,16 @@
 #include <memory>
 #include <sys/socket.h>
 #include <netinet/in.h>
-
+#include "HttpResponse.h"
 class TimeNode;
 class HttpRequest;
 class ClientSocket;
 class HttpResponse;
-
 class HttpData
 {
 public:
     //int mSockfd;
-    HttpData():mRequest(std::make_shared<HttpRequest>()){};
+    HttpData():mRequest(std::make_shared<HttpRequest>()),mResponse(std::make_shared<HttpResponse>()){};
 
     std::shared_ptr<HttpRequest> mRequest;
     std::shared_ptr<ClientSocket> mClientSocket;

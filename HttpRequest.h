@@ -15,10 +15,10 @@ private:
     int startIndex;
     int readIndex;
     PARSE_STATE curParseState;
-
+public:
     std::string mUrl;
     HTTP_METHOD mMethod; 
-    HTTP_VERSION mVersion;
+    std::string mVersion;
     std::string mContent;
 
 public:

@@ -8,6 +8,7 @@ public:
     mServerSocket(port,ip)
     {
         mServerSocket.bind();
+        //mServerSocket.bind();
         mServerSocket.listen(20);
     }
 

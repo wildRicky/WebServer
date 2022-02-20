@@ -7,10 +7,10 @@ ThreadPool& ThreadPool::getInstance(int threadNum,int maxRequestNum)
     return singleton;
 }
 
-void ThreadPool::worker()
+void* ThreadPool::worker(void*)
 {
     getInstance(0,0).run();
-    return;
+    return nullptr;
 }
 
 ThreadPool::ThreadPool(int threadNum,int maxRequestNum):mThreadNum(threadNum),
@@ -21,7 +21,8 @@ mMaxRequestNum(maxRequestNum),mStop(false)
     if(maxRequestNum<=0||maxRequestNum>=MAX_QUEUE_NUM)
         mMaxRequestNum=2048;
     mThreads.resize(threadNum);
-    for(int i=0;i<threadNum;++i)
+    std::cout<<"ThreadPool create : "<<mThreadNum<<std::endl;
+    for(int i=0;i<mThreadNum;++i)
     {
         if(pthread_create(&mThreads[i],nullptr,worker,nullptr)!=0)
             throw std::exception();
@@ -36,8 +37,9 @@ ThreadPool::~ThreadPool()
     
 };
 
-bool ThreadPool::add(std::function<void ()> fun)
+bool ThreadPool::add(std::shared_ptr<ThreadTask> fun)
 {
+    std::cout<<"add task to pool"<<std::endl;
     if((int)requestQueue.size()==mMaxRequestNum)
     {
         std::cout<<"error!Request queue full"<<std::endl;
@@ -57,16 +59,18 @@ void ThreadPool::run()
     while(!mStop)
     {
         poolSem.wait();
+        std::cout<<"sem avilable"<<std::endl;
         poolMutex.lock();
+        std::cout<<"get pool lock"<<std::endl;
         if(requestQueue.empty())
         {
             poolMutex.unlock();
             continue;
         }
-        std::function<void()> process=requestQueue.front();
+        auto task=requestQueue.front();
         requestQueue.pop_front();
         poolMutex.unlock();
-        process();
+        task->process(task->data);
     }
     return;
 };

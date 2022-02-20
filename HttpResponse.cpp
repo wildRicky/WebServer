@@ -28,7 +28,7 @@ void HttpResponse::setMimeType(std::string str)
 }
 std::string HttpResponse::setResponse()
 {
-    std::string result=mHttpVersin+" "+std::to_string(mStatusCode)+" "+statusCodeMap[mStatusCode]+"\r\n";
+    std::string result=mHttpVersion+" "+std::to_string(mStatusCode)+" "+statusCodeMap[mStatusCode]+"\r\n";
     //sprintf(buff,"%s %d %s\r\n",mHttpVersion.c_str(),mStatusCode,statusCodeMap[mStatusCode].c_str());
     for(auto ite:headerMap)
     {
@@ -55,5 +55,6 @@ std::string HttpResponse::setResponse()
     result.append("\r\n");
     //strcat(buff,tmp.c_str());
     //strcat(buff,mBody);
+    result.append(mBody);
     return result;
 }

@@ -1,8 +1,9 @@
 #include "Timer.h"
 #include <sys/time.h>
 #include <exception>
-
-static size_t TimeNode::currTime()
+#include "HttpData.h"
+#include "HttpRequest.h"
+size_t TimeNode::currTime()
 {
     struct timeval cur;
     gettimeofday(&cur,NULL);
@@ -14,7 +15,7 @@ TimeNode::TimeNode(std::shared_ptr<HttpData> usrDataPtr,size_t delay):isDeleted(
     expiredTime=delay*1000+currTime();
 };
 
-shared_TimeNode Timer::addTimer(std::shared_ptr<HttpData> usrDataPtr,size_t delay)
+std::shared_ptr<TimeNode> Timer::addTimer(std::shared_ptr<HttpData> usrDataPtr,size_t delay)
 {
     shared_TimeNode tmp=std::make_shared<TimeNode>(usrDataPtr,delay);
     timeHeap.push(tmp);
@@ -25,7 +26,7 @@ void TimeNode::close()
 {
     isDeleted=true;
     //这里HttpData只有timer引用，所以reset会使HttpData自动析构
-    mUserData->reset();
+    mUserData.reset();
     return;
 }
 size_t Timer::topTime()

@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ubantu/WebServer/HttpResponse.cpp
+HttpResponse.h
+/home/ubantu/WebServer/HttpResponse.h
+string.h
+-
+
+/home/ubantu/WebServer/HttpResponse.h
+unordered_map
+-
+HttpStateDefine.h
+/home/ubantu/WebServer/HttpStateDefine.h
+
+/home/ubantu/WebServer/HttpStateDefine.h
+

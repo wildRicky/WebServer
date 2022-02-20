@@ -1,7 +1,7 @@
 #pragma once
 
 #include <unordered_map>
-
+#include "HttpStateDefine.h"
 
 class HttpResponse
 {
@@ -39,7 +39,6 @@ public:
     {
         headerMap[key]=value;
     };
-
     std::string setResponse();
     void setMimeType(std::string);
 private:
